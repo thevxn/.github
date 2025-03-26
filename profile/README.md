@@ -14,3 +14,6 @@ Our most notable projects include:
   - A utility for parsing Common and Combined Log Format (CLF) log files and storing them in SQLite for further analysis. Built with concurrency in mind. 
 - [Helldive Helper](https://helldivehelper.net/)
   - Customize loadouts for your team in Helldivers 2 and easily share with your friends.
+
+## Our Preferred Tech Stack
+![Our Preferred Tech Stack](https://simpleskill.icons.workers.dev/svg?i=go,node.js,vue.js,postgresql,docker)
