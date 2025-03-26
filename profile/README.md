@@ -1,18 +1,16 @@
-## vxn
+# vxn
 
-Welcome to our Github public profile! 
+We are a group of developers & IT enthusiasts from various fields focusing on sharing knowledge and creating projects together.
 
-We are Free and Open Source Software (FOSS) enthusiasts! 🐧
+## Our Portfolio
 
-<!--
+Our most notable projects:
 
-# legacy example:
-
-**Here are some ideas to get you started:**
-
-🙋‍♀️ A short introduction - what is your organization all about?
-🌈 Contribution guidelines - how can the community get involved?
-👩‍💻 Useful resources - where can the community find your docs? Is there anything else the community should know?
-🍿 Fun facts - what does your team eat for breakfast?
-🧙 Remember, you can do mighty things with the power of [Markdown](https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
--->
+- [Kapka pro ušáčka](https://www.kapkaprousacka.cz/)
+  - KPU is a blood donor registry for rabbits. It enables the owners of potential rabbit blood donors to be notified when there are rabbits in need of a blood transfusion in their region. 
+- [dish](https://github.com/thevxn/dish)
+  - A lightweight monitoring service that efficiently checks socket connections and can be configured remotely. 
+- [xilt](https://github.com/thevxn/xilt)
+  - A utility for parsing Common and Combined Log Format (CLF) log files and storing them in SQLite for further analysis. Built with concurrency in mind. 
+- [Helldive Helper](https://helldivehelper.net/)
+  - Customize loadouts for your team in Helldivers 2 and easily share with your friends.
