@@ -4,7 +4,7 @@ We are a group of developers & IT enthusiasts from various fields focusing on sh
 
 ## Our Portfolio
 
-Our most notable projects:
+Our most notable projects include:
 
 - [Kapka pro ušáčka](https://www.kapkaprousacka.cz/)
   - KPU is a blood donor registry for rabbits. It enables the owners of potential rabbit blood donors to be notified when there are rabbits in need of a blood transfusion in their region. 
