@@ -1,4 +1,5 @@
-<p><img  src="logo-transparent.svg"><br>We are a group of developers & IT enthusiasts from various fields focusing on sharing knowledge and creating projects together.</p>
+<p align="center"><img  src="logo-transparent.svg"><br></p>
+We are a group of developers & IT enthusiasts from various fields focusing on sharing knowledge and creating projects together.
 
 ## Our Portfolio
 
