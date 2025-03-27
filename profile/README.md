@@ -1,6 +1,4 @@
-# vxn
-
-We are a group of developers & IT enthusiasts from various fields focusing on sharing knowledge and creating projects together.
+<p><img  src="logo-transparent.svg"><br>We are a group of developers & IT enthusiasts from various fields focusing on sharing knowledge and creating projects together.</p>
 
 ## Our Portfolio
 
