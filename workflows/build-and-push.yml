@@ -30,6 +30,14 @@ on:
         required: false
         type: string
         default: "production"
+      runs_on:
+        description: "Runner label"
+        required: true
+        type: string
+      registry_url:
+        description: "Container registry URL"
+        required: true
+        type: string
     secrets:
       REGISTRY_LOGIN:
         description: "Registry username"
@@ -37,13 +45,10 @@ on:
       REGISTRY_PASSWORD:
         description: "Registry password or token"
         required: true
-      REGISTRY_URL:
-        description: "Container registry URL"
-        required: true
 
 jobs:
   build-and-push:
-    runs-on: ${{ vars.DEFAULT_RUNNER }}
+    runs-on: ${{ inputs.runs_on }}
 
     steps:
       - name: Checkout
@@ -54,27 +59,27 @@ jobs:
           echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login \
             -u "${{ secrets.REGISTRY_LOGIN }}" \
             --password-stdin \
-            "${{ secrets.REGISTRY_URL }}"
+            "${{ inputs.registry_url }}"
 
       - name: Build image
         run: |
           docker build \
             --file ${{ inputs.dockerfile_path }} \
             --target ${{ inputs.target }} \
-            --tag ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }} \
+            --tag ${{ inputs.registry_url }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }} \
             ${{ inputs.build_context }}
 
       - name: Push versioned tag
         run: |
-          docker push ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }}
+          docker push ${{ inputs.registry_url }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }}
 
       - name: Tag and push latest
         run: |
           docker tag \
-            ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }} \
-            ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:latest
-          docker push ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:latest
+            ${{ inputs.registry_url }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }} \
+            ${{ inputs.registry_url }}/${{ inputs.project_name }}/${{ inputs.image_name }}:latest
+          docker push ${{ inputs.registry_url }}/${{ inputs.project_name }}/${{ inputs.image_name }}:latest
 
       - name: Log out of registry
         if: always()
-        run: docker logout "${{ secrets.REGISTRY_URL }}"
+        run: docker logout "${{ inputs.registry_url }}"
