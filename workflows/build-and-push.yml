@@ -1,0 +1,80 @@
+name: Docker Build & Push
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: "Docker image name"
+        required: true
+        type: string
+      project_name:
+        description: "Project name in the registry"
+        required: true
+        type: string
+      version:
+        description: "Image version/tag to build and push"
+        required: true
+        type: string
+      dockerfile_path:
+        description: "Path to the Dockerfile"
+        required: false
+        type: string
+        default: "./Dockerfile"
+      build_context:
+        description: "Docker build context path"
+        required: false
+        type: string
+        default: "."
+      target:
+        description: "Dockerfile build target stage"
+        required: false
+        type: string
+        default: "production"
+    secrets:
+      REGISTRY_LOGIN:
+        description: "Registry username"
+        required: true
+      REGISTRY_PASSWORD:
+        description: "Registry password or token"
+        required: true
+      REGISTRY_URL:
+        description: "Container registry URL"
+        required: true
+
+jobs:
+  build-and-push:
+    runs-on: ${{ vars.DEFAULT_RUNNER }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to registry
+        run: |
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login \
+            -u "${{ secrets.REGISTRY_LOGIN }}" \
+            --password-stdin \
+            "${{ secrets.REGISTRY_URL }}"
+
+      - name: Build image
+        run: |
+          docker build \
+            --file ${{ inputs.dockerfile_path }} \
+            --target ${{ inputs.target }} \
+            --tag ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }} \
+            ${{ inputs.build_context }}
+
+      - name: Push versioned tag
+        run: |
+          docker push ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }}
+
+      - name: Tag and push latest
+        run: |
+          docker tag \
+            ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:${{ inputs.version }} \
+            ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:latest
+          docker push ${{ secrets.REGISTRY_URL }}/${{ inputs.project_name }}/${{ inputs.image_name }}:latest
+
+      - name: Log out of registry
+        if: always()
+        run: docker logout "${{ secrets.REGISTRY_URL }}"
