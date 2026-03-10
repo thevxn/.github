@@ -34,6 +34,15 @@ on:
         description: "Target repository to be notified after successful build and push to trigger deployment."
         required: true
         type: string
+    secrets:
+      REGISTRY_URL:
+        required: true
+      REGISTRY_LOGIN:
+        required: true
+      REGISTRY_PASSWORD:
+        required: true
+      DISPATCH_TOKEN:
+        required: true
 
 jobs:
   build-and-push:

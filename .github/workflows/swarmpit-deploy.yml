@@ -7,6 +7,11 @@ on:
                 description: "Project name in Swarmpit"
                 required: true
                 type: string
+        secrets:
+            SWARMPIT_BEARER:
+                required: true
+            SWARMPIT_BASE_URL:
+                required: true
 
 jobs:
     deploy:
