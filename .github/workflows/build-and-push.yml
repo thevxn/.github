@@ -30,10 +30,6 @@ on:
         required: false
         type: string
         default: "production"
-      runs_on:
-        description: "Runner label"
-        required: true
-        type: string
 
 jobs:
   build-and-push:
