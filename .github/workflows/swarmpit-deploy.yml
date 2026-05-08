@@ -20,4 +20,17 @@ jobs:
             - uses: actions/checkout@v4
             - name: Deploy using Swarmpit
               run: |
-                  curl -X POST -sSL -H "authorization: ${{ secrets.SWARMPIT_BEARER }}" "${{ secrets.SWARMPIT_BASE_URL }}/services/${{ inputs.project_name }}/redeploy"
+                RESPONSE=$(curl -X POST -sSL -w "\n%{http_code}" \
+                  -H "authorization: ${{ secrets.SWARMPIT_BEARER }}" \
+                  "${{ secrets.SWARMPIT_BASE_URL }}/services/${{ inputs.project_name }}/redeploy")
+                
+                HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+                BODY=$(echo "$RESPONSE" | head -n -1)
+                
+                echo "Response: $BODY"
+                echo "HTTP status: $HTTP_CODE"
+                
+                if [[ "$HTTP_CODE" -lt 200 || "$HTTP_CODE" -ge 300 ]]; then
+                  echo "Deploy failed with status $HTTP_CODE"
+                  exit 1
+                fi
